@@ -1,0 +1,23 @@
+{
+  "name": "bittorrent",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ThatGuyChandan/bitTorrent.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ThatGuyChandan/bitTorrent/issues"
+  },
+  "homepage": "https://github.com/ThatGuyChandan/bitTorrent#readme",
+  "dependencies": {
+    "bencode": "^4.0.0",
+    "nodemon": "^3.1.4"
+  }
+}
