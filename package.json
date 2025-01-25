@@ -18,6 +18,7 @@
   "homepage": "https://github.com/ThatGuyChandan/bitTorrent#readme",
   "dependencies": {
     "bencode": "^4.0.0",
+    "fs": "^0.0.1-security",
     "nodemon": "^3.1.4"
   }
 }
