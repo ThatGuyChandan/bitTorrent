@@ -32,7 +32,15 @@ export const getPeers = (torrent, callback) => {
 
 function udpSend(socket, message, rawUrl, callback = () => {}) {
   const url = urlParse(rawUrl);
-  socket.send(message, 0, message.length, url.port, url.host, callback);
+
+  // Validate the port before sending
+  const port = url.port || 6969; // Default to port 6969 if no port is provided
+  if (port <= 0 || port >= 65536) {
+    console.error("Invalid port:", port);
+    return; // Exit if the port is invalid
+  }
+
+  socket.send(message, 0, message.length, port, url.host, callback);
 }
 
 function respType(resp) {

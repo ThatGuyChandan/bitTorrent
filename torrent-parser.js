@@ -17,12 +17,10 @@ export const size = (torrent) => {
   // Convert the size to an 8-byte buffer using bigInt
   const sizeBigInt = bigInt(size);
   const sizeBuffer = Buffer.alloc(8);
-  sizeBigInt
-    .toArray(256) // Convert bigInt to a byte array
-    .value.reverse() // Reverse the byte array to match little-endian format
-    .forEach((byte, index) => {
-      sizeBuffer[7 - index] = byte; // Fill the buffer from the end
-    });
+  const sizeArray = sizeBigInt.toArray(256).value.reverse(); // Convert and reverse for little-endian
+  sizeArray.forEach((byte, index) => {
+    sizeBuffer[7 - index] = byte; // Fill the buffer
+  });
 
   return sizeBuffer;
 };
@@ -30,4 +28,30 @@ export const size = (torrent) => {
 export const infoHash = (torrent) => {
   const info = bencode.encode(torrent.info);
   return crypto.createHash("sha1").update(info).digest();
+};
+
+export const BLOCK_LEN = Math.pow(2, 14);
+
+export const pieceLen = (torrent, pieceIndex) => {
+  const totalLength = bigInt.fromArray(size(torrent), 256).toJSNumber(); // Convert buffer back to number
+  const pieceLength = torrent.info["piece length"];
+
+  const lastPieceLength = totalLength % pieceLength;
+  const lastPieceIndex = Math.floor(totalLength / pieceLength);
+
+  return lastPieceIndex === pieceIndex ? lastPieceLength : pieceLength;
+};
+
+export const blocksPerPiece = (torrent, pieceIndex) => {
+  const pieceLength = pieceLen(torrent, pieceIndex);
+  return Math.ceil(pieceLength / BLOCK_LEN);
+};
+
+export const blockLen = (torrent, pieceIndex, blockIndex) => {
+  const pieceLength = pieceLen(torrent, pieceIndex);
+
+  const lastBlockLength = pieceLength % BLOCK_LEN;
+  const lastBlockIndex = Math.floor(pieceLength / BLOCK_LEN);
+
+  return blockIndex === lastBlockIndex ? lastBlockLength : BLOCK_LEN;
 };
