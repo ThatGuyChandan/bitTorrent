@@ -1,13 +1,13 @@
 "use strict";
 
-const crypto = require("crypto");
+import crypto from "crypto";
 
 let id = null;
 
-module.exports.genId = () => {
+export const genId = () => {
   if (!id) {
     id = crypto.randomBytes(20);
-    Buffer.from("-AT0001-").copy(id, 0);
+    Buffer.from("-EGO001-").copy(id, 0);
   }
   return id;
 };
