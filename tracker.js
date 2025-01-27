@@ -8,6 +8,7 @@ import { infoHash, size } from "./torrent-parser.js";
 import { genId } from "./utils.js";
 
 export const getPeers = (torrent, callback) => {
+  console.log("get peers called");
   const socket = dgram.createSocket("udp4");
   const url = torrent.announce.toString("utf8");
 

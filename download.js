@@ -12,10 +12,14 @@ import {
 import Pieces from "./pieces.js";
 import Queue from "./queue.js";
 export default (torrent, path) => {
+  console.log("downloading started...");
   getPeers(torrent, (peers) => {
+    console.log("getting peers :" + peers);
     const pieces = new Pieces(torrent);
     const file = fs.openSync(path, "w");
-    peers.forEach((peer) => download(peer, torrent, pieces, file));
+    peers.forEach((peer) => {
+      download(peer, torrent, pieces, file);
+    });
   });
 };
 function download(peer, torrent, pieces) {

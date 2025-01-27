@@ -6,6 +6,7 @@ import crypto from "crypto";
 import bigInt from "big-integer";
 
 export const open = (filepath) => {
+  console.log(`Reading torrent file: ${filepath}`);
   return bencode.decode(fs.readFileSync(filepath));
 };
 
