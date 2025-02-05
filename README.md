@@ -36,7 +36,7 @@ To start downloading a torrent, use the following command:
 ```bash
 node index.js path_to_your_torrent_file.torrent
 ```
-###Future Improvements
+### Future Improvements
 1.Add a web interface for easy interaction (e.g., start/stop downloads, see progress).
 2.Implement file prioritization and better error handling for peer connections.
 3.Add multiple tracker support to increase the number of available peers.
