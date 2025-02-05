@@ -4,7 +4,6 @@ import download from "./download.js";
 import { open } from "./torrent-parser.js";
 import path from "path";
 
-// Get the current directory in ES Module
 const __dirname = path.dirname(new URL(import.meta.url).pathname);
 
 const torrentPath = process.argv[2];
@@ -16,14 +15,16 @@ if (!torrentPath) {
 let torrent;
 try {
   torrent = open(torrentPath);
-  //   console.log("Torrent file loaded:", torrent);
+  console.log("Torrent file loaded");
 } catch (err) {
   console.error("Error loading torrent file:", err);
   process.exit(1);
 }
 
+const outputPath = path.join(__dirname, "downloaded_file");
+
 try {
-  download(torrent, path.join(__dirname, "downloaded_file"));
+  download(torrent, outputPath);
 } catch (err) {
   console.error("Error calling download:", err);
 }
